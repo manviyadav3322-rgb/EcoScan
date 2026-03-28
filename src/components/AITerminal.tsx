@@ -19,10 +19,12 @@ const AITerminal = () => {
     let i = 0;
     const interval = setInterval(() => {
       if (i < systemMessages.length) {
-        setVisibleMessages((prev) => [...prev, systemMessages[i]]);
+        const currentMsg = systemMessages[i];
+        const nextExists = i + 1 < systemMessages.length;
+        setVisibleMessages((prev) => [...prev, currentMsg]);
         i++;
         setThinking(true);
-        setTimeout(() => setThinking(i < systemMessages.length), 800);
+        setTimeout(() => setThinking(nextExists), 800);
       } else {
         clearInterval(interval);
         setThinking(false);
