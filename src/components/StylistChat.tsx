@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Sparkles, Bot } from "lucide-react";
+import { MessageCircle, X, Send, Bot, Terminal } from "lucide-react";
 
 interface Message {
   role: "assistant" | "user";
@@ -10,17 +10,19 @@ interface Message {
 const initialMessages: Message[] = [
   {
     role: "assistant",
-    text: "Welcome to EcoScan. I'm your personal sustainability concierge. I've analyzed your wardrobe — you have 6 garments with an average sustainability score of 66%. How can I help today?",
+    text: "[SYS] EcoScan Stylist v3.2 initialized. 8 assets indexed. Average sustainability: 71%. 3 items flagged. How can I assist?",
   },
 ];
 
 const sampleResponses: Record<string, string> = {
   default:
-    "Based on your wardrobe data, I'd suggest starting with your Synthetic Blouse — it accounts for 28% of your total footprint. A switch to organic silk could save 3.1 kg CO₂ annually.",
+    "Analysis: Synthetic Blouse (ECO-002) accounts for 28% of total footprint. Recommend swap to Organic Silk — estimated 3.1 kg CO₂ reduction/year.",
   polyester:
-    "Polyester releases microplastics with every wash. Your Synthetic Blouse sheds approximately 700,000 fibers per cycle. I recommend our Organic Silk alternative — same drape, 72% less environmental impact.",
+    "Polyester alert: ECO-002 releases ~700K microfibers per wash cycle. Flagged for replacement. Organic Silk alternative identified — 72% lower environmental payload.",
   sustainable:
-    "Your top performers are the Organic Cotton Tee (95/100) and Vintage Denim Jacket (92/100). These represent the gold standard — high wear count, low impact materials, and excellent longevity.",
+    "Top assets: Organic Cotton Tee (95/100) and Vintage Denim Jacket (92/100). High wear count + low impact materials = optimal sustainability profile.",
+  pattern:
+    "Pattern analysis complete. Your wardrobe contains: 2× Geometric, 2× Solid, 1× Floral, 1× Block Print, 1× Animal Print, 1× Vintage Motif. Floral item (ECO-002) flagged — synthetic base.",
 };
 
 const StylistChat = () => {
@@ -30,27 +32,22 @@ const StylistChat = () => {
 
   const handleSend = () => {
     if (!input.trim()) return;
-    const userMsg: Message = { role: "user", text: input };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((prev) => [...prev, { role: "user", text: input }]);
 
     const lower = input.toLowerCase();
-    let responseKey = "default";
-    if (lower.includes("polyester") || lower.includes("synthetic")) responseKey = "polyester";
-    if (lower.includes("sustainable") || lower.includes("best")) responseKey = "sustainable";
+    let key = "default";
+    if (lower.includes("polyester") || lower.includes("synthetic")) key = "polyester";
+    if (lower.includes("sustainable") || lower.includes("best")) key = "sustainable";
+    if (lower.includes("pattern") || lower.includes("print")) key = "pattern";
 
     setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", text: sampleResponses[responseKey] },
-      ]);
+      setMessages((prev) => [...prev, { role: "assistant", text: sampleResponses[key] }]);
     }, 800);
-
     setInput("");
   };
 
   return (
     <>
-      {/* Floating trigger */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -58,15 +55,18 @@ const StylistChat = () => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-2xl bg-sage flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
-            style={{ boxShadow: "0 8px 32px -8px hsl(163 18% 58% / 0.4)" }}
+            className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-xl flex items-center justify-center"
+            style={{
+              background: "linear-gradient(135deg, hsl(var(--neon-blue) / 0.2), hsl(var(--neon-purple) / 0.2))",
+              border: "1px solid hsl(var(--neon-blue) / 0.3)",
+              boxShadow: "0 0 30px -8px hsl(var(--neon-blue) / 0.4)",
+            }}
           >
-            <MessageCircle className="h-6 w-6 text-primary-foreground" />
+            <MessageCircle className="h-6 w-6 text-primary" />
           </motion.button>
         )}
       </AnimatePresence>
 
-      {/* Chat drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -74,29 +74,35 @@ const StylistChat = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 400, opacity: 0 }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed right-6 bottom-6 top-6 w-[380px] z-50 bg-card rounded-2xl border border-border shadow-2xl flex flex-col overflow-hidden"
+            className="fixed right-6 bottom-6 top-6 w-[380px] z-50 rounded-xl flex flex-col overflow-hidden"
+            style={{
+              background: "hsl(var(--card) / 0.85)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid hsl(var(--neon-blue) / 0.15)",
+              boxShadow: "0 0 40px -10px hsl(var(--neon-blue) / 0.2)",
+            }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-border">
               <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-xl bg-sage-light flex items-center justify-center">
-                  <Sparkles className="h-4 w-4 text-sage" />
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ background: "hsl(var(--neon-blue) / 0.1)", border: "1px solid hsl(var(--neon-blue) / 0.2)" }}>
+                  <Terminal className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-charcoal">EcoScan Stylist</h3>
-                  <p className="text-[11px] text-muted-foreground">Personal Concierge</p>
+                  <h3 className="text-sm font-semibold text-foreground">EcoScan AI</h3>
+                  <div className="flex items-center gap-1.5">
+                    <div className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                    <p className="mono-data text-[10px] text-muted-foreground">ONLINE</p>
+                  </div>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-secondary transition-colors"
-              >
+              <button onClick={() => setIsOpen(false)} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-secondary transition-colors">
                 <X className="h-4 w-4 text-muted-foreground" />
               </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-3">
               {messages.map((msg, i) => (
                 <motion.div
                   key={i}
@@ -106,17 +112,18 @@ const StylistChat = () => {
                   className={`flex gap-2.5 ${msg.role === "user" ? "justify-end" : ""}`}
                 >
                   {msg.role === "assistant" && (
-                    <div className="h-7 w-7 rounded-lg bg-sage-light flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Bot className="h-3.5 w-3.5 text-sage" />
+                    <div className="h-6 w-6 rounded-md flex items-center justify-center flex-shrink-0 mt-1" style={{ background: "hsl(var(--neon-cyan) / 0.1)", border: "1px solid hsl(var(--neon-cyan) / 0.2)" }}>
+                      <Bot className="h-3 w-3 text-accent" />
                     </div>
                   )}
-                  <div
-                    className={`max-w-[80%] px-4 py-3 rounded-2xl text-[13px] leading-relaxed ${
-                      msg.role === "user"
-                        ? "bg-sage text-primary-foreground rounded-br-md"
-                        : "bg-secondary text-charcoal rounded-bl-md"
-                    }`}
-                  >
+                  <div className={`max-w-[80%] px-3.5 py-2.5 rounded-xl text-[12px] leading-relaxed ${
+                    msg.role === "user"
+                      ? "rounded-br-sm"
+                      : "rounded-bl-sm mono-data"
+                  }`} style={msg.role === "user"
+                    ? { background: "hsl(var(--neon-blue) / 0.15)", color: "hsl(var(--neon-blue))", border: "1px solid hsl(var(--neon-blue) / 0.2)" }
+                    : { background: "hsl(var(--secondary))", color: "hsl(var(--foreground))" }
+                  }>
                     {msg.text}
                   </div>
                 </motion.div>
@@ -125,19 +132,17 @@ const StylistChat = () => {
 
             {/* Input */}
             <div className="px-5 py-4 border-t border-border">
-              <div className="flex items-center gap-2 bg-secondary rounded-xl px-4 py-2.5">
+              <div className="flex items-center gap-2 rounded-lg px-3 py-2" style={{ background: "hsl(var(--secondary))" }}>
+                <span className="mono-data text-[10px] text-primary">{">"}</span>
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                  placeholder="Ask about your wardrobe..."
-                  className="flex-1 bg-transparent text-sm text-charcoal placeholder:text-muted-foreground outline-none"
+                  placeholder="Query wardrobe data..."
+                  className="flex-1 bg-transparent mono-data text-xs text-foreground placeholder:text-muted-foreground outline-none"
                 />
-                <button
-                  onClick={handleSend}
-                  className="h-8 w-8 rounded-lg bg-sage flex items-center justify-center hover:bg-sage/90 transition-colors"
-                >
-                  <Send className="h-3.5 w-3.5 text-primary-foreground" />
+                <button onClick={handleSend} className="h-7 w-7 rounded-md flex items-center justify-center transition-colors" style={{ background: "hsl(var(--neon-blue) / 0.15)", border: "1px solid hsl(var(--neon-blue) / 0.2)" }}>
+                  <Send className="h-3 w-3 text-primary" />
                 </button>
               </div>
             </div>
