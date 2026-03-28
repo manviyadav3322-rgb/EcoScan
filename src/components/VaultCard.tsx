@@ -50,8 +50,8 @@ const VaultCard = ({ item, index }: VaultCardProps) => {
         {/* Metrics */}
         <div className="grid grid-cols-3 gap-3">
           <div className="text-center p-2.5 rounded-lg bg-secondary">
-            <Leaf className={`h-3.5 w-3.5 mx-auto mb-1 ${isHigh ? "text-red-400" : "text-sage"}`} />
-            <p className={`text-sm font-semibold ${isHigh ? "text-red-500" : "text-charcoal"}`}>
+            <Leaf className={`h-3.5 w-3.5 mx-auto mb-1 ${isHigh ? "text-destructive" : "text-sage"}`} />
+            <p className={`text-sm font-semibold ${isHigh ? "text-destructive" : "text-charcoal"}`}>
               {item.co2Score}
             </p>
             <p className="text-[10px] text-muted-foreground mt-0.5">kg CO₂</p>
