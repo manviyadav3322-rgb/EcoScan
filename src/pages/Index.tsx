@@ -1,53 +1,47 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { DashboardSidebar } from "@/components/DashboardSidebar";
-import StatusBar from "@/components/StatusBar";
-import WardrobeGrid from "@/components/WardrobeGrid";
-import AITerminal from "@/components/AITerminal";
-import ImpactRadar from "@/components/ImpactRadar";
-import CarbonAlertBanner from "@/components/CarbonAlertBanner";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import DigitalVault from "@/components/DigitalVault";
+import CarbonDashboard from "@/components/CarbonDashboard";
+import SmartRecommendations from "@/components/SmartRecommendations";
+import StylistChat from "@/components/StylistChat";
+import { Leaf } from "lucide-react";
 
 const Index = () => {
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full scanline-overlay">
-        <DashboardSidebar />
+    <div className="min-h-screen bg-background">
+      <Navbar />
 
-        <div className="flex-1 flex flex-col min-w-0">
-          {/* Top bar */}
-          <header className="flex items-center border-b border-border bg-card/30 backdrop-blur-sm">
-            <SidebarTrigger className="ml-2 text-muted-foreground hover:text-foreground" />
-            <div className="px-4 py-3">
-              <h1 className="text-sm neon-text-blue">Project: Eco-Scan</h1>
-              <p className="text-[10px] text-muted-foreground font-mono">
-                AI Fashion Sustainability Command Center
-              </p>
-            </div>
-          </header>
+      <main className="pt-16">
+        <HeroSection />
 
-          <StatusBar />
-
-          {/* Main content */}
-          <main className="flex-1 p-6 space-y-6 overflow-y-auto">
-            <CarbonAlertBanner />
-
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-              {/* Main grid area */}
-              <div className="xl:col-span-2">
-                <WardrobeGrid />
-              </div>
-
-              {/* Right panel */}
-              <div className="space-y-6">
-                <ImpactRadar />
-                <div className="h-[350px]">
-                  <AITerminal />
-                </div>
-              </div>
-            </div>
-          </main>
+        <div id="vault">
+          <DigitalVault />
         </div>
-      </div>
-    </SidebarProvider>
+
+        <div id="impact">
+          <CarbonDashboard />
+        </div>
+
+        <div id="picks">
+          <SmartRecommendations />
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-border py-12 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Leaf className="h-4 w-4 text-sage" />
+            <span className="text-sm font-semibold text-charcoal">EcoScan</span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Building a more sustainable relationship with fashion, one garment at a time.
+          </p>
+        </div>
+      </footer>
+
+      <StylistChat />
+    </div>
   );
 };
 
