@@ -27,7 +27,7 @@ const VaultCard = ({ item, index }: VaultCardProps) => {
         {/* Impact badge */}
         <div className="absolute top-3 right-3">
           {isHigh ? (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium bg-red-50 text-red-500">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium bg-destructive/10 text-destructive">
               <AlertCircle className="h-3 w-3" />
               High Impact
             </span>
@@ -83,7 +83,7 @@ const VaultCard = ({ item, index }: VaultCardProps) => {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.08 + 0.2 }}
               className={`h-full rounded-full ${
-                isHigh ? "bg-red-400" : item.sustainabilityScore >= 80 ? "bg-sage" : "bg-sage-mid"
+                isHigh ? "bg-destructive/70" : item.sustainabilityScore >= 80 ? "bg-sage" : "bg-sage-mid"
               }`}
             />
           </div>
