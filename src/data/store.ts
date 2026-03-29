@@ -1,0 +1,80 @@
+export const wardrobe = [
+  {
+    id: "WD-001",
+    name: "Vintage Denim Jacket",
+    material: "recycled denim",
+    fabricWeight: 820,
+    co2Score: 3.28,
+    wearCount: 67,
+    category: "Outerwear",
+    impactLevel: "low",
+    sustainabilityScore: 92,
+    suggestion: "Pair with organic cotton tee",
+    imageGradient: "from-blue-100 to-stone-100"
+  },
+  {
+    id: "WD-002",
+    name: "Synthetic Blouse",
+    material: "polyester",
+    fabricWeight: 300,
+    co2Score: 4.5,
+    wearCount: 12,
+    category: "Top",
+    impactLevel: "high",
+    sustainabilityScore: 40,
+    suggestion: "Switch to organic silk blouse",
+    imageGradient: "from-purple-100 to-pink-100"
+  },
+  {
+    id: "WD-003",
+    name: "Linen Summer Dress",
+    material: "linen",
+    fabricWeight: 500,
+    co2Score: 2.0,
+    wearCount: 34,
+    category: "Dress",
+    impactLevel: "low",
+    sustainabilityScore: 85,
+    suggestion: "Perfect summer eco outfit",
+    imageGradient: "from-yellow-50 to-orange-100"
+  },
+  {
+    id: "WD-004",
+    name: "Merino Wool Sweater",
+    material: "wool",
+    fabricWeight: 600,
+    co2Score: 4.2,
+    wearCount: 50,
+    category: "Sweater",
+    impactLevel: "medium",
+    sustainabilityScore: 70,
+    suggestion: "Layer for winter sustainability",
+    imageGradient: "from-gray-100 to-slate-200"
+  },
+  {
+    id: "WD-005",
+    name: "Organic Cotton Tee",
+    material: "organic cotton",
+    fabricWeight: 200,
+    co2Score: 0.8,
+    wearCount: 80,
+    category: "Top",
+    impactLevel: "low",
+    sustainabilityScore: 95,
+    suggestion: "Everyday essential",
+    imageGradient: "from-green-50 to-white"
+  },
+  {
+    id: "WD-006",
+    name: "Nylon Puffer Vest",
+    material: "nylon",
+    fabricWeight: 700,
+    co2Score: 6.5,
+    wearCount: 22,
+    category: "Outerwear",
+    impactLevel: "high",
+    sustainabilityScore: 35,
+    suggestion: "Consider recycled alternatives",
+    imageGradient: "from-slate-100 to-gray-300"
+  }
+];
