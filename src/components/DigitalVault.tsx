@@ -1,9 +1,11 @@
-import { wardrobeItems } from "@/data/wardrobe";
+import { useWardrobe } from "@/context/WardrobeContext";
 import VaultCard from "./VaultCard";
 import { motion } from "framer-motion";
 import { Grid3X3 } from "lucide-react";
 
 const DigitalVault = () => {
+  const { items } = useWardrobe();
+
   return (
     <section className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
@@ -24,9 +26,7 @@ const DigitalVault = () => {
           </p>
         </motion.div>
 
-        {/* Scan overlay container */}
         <div className="relative overflow-hidden rounded-2xl border border-border/30 bg-card p-6">
-          {/* Laser scan line */}
           <motion.div
             initial={{ top: "-10%" }}
             animate={{ top: "110%" }}
@@ -35,7 +35,7 @@ const DigitalVault = () => {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {wardrobeItems.map((item, i) => (
+            {items.map((item, i) => (
               <VaultCard key={item.id} item={item} index={i} />
             ))}
           </div>
