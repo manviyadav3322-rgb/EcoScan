@@ -7,18 +7,23 @@ export default function handler(req, res) {
 
   const { name, material, co2 } = req.body;
 
+  if (!name || !material || !co2) {
+    return res.status(400).json({ error: "Missing fields" });
+  }
+
   const newItem = {
-    id: store.items.length + 1,
+    id: Date.now(),
     name,
     material,
     co2: Number(co2),
-    date: new Date()
+    date: new Date().toISOString()
   };
 
   store.items.push(newItem);
 
-  res.status(201).json({
-    message: "Item added successfully",
-    item: newItem
+  return res.status(200).json({
+    message: "Wardrobe item added successfully",
+    item: newItem,
+    totalItems: store.items.length
   });
 }
