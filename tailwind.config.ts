@@ -8,13 +8,13 @@ export default {
     container: {
       center: true,
       padding: "2rem",
-      screens: { "2xl": "1400px" },
+      screens: {
+        "2xl": "1400px",
+      },
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-        display: ["Orbitron", "sans-serif"],
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -50,15 +50,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        neon: {
-          blue: "hsl(var(--neon-blue))",
-          cyan: "hsl(var(--neon-cyan))",
-          purple: "hsl(var(--neon-purple))",
-          red: "hsl(var(--neon-red))",
+        sage: {
+          DEFAULT: "hsl(var(--sage))",
+          light: "hsl(var(--sage-light))",
+          mid: "hsl(var(--sage-mid))",
         },
-        surface: {
-          DEFAULT: "hsl(var(--surface))",
-          elevated: "hsl(var(--surface-elevated))",
+        charcoal: {
+          DEFAULT: "hsl(var(--charcoal))",
+          light: "hsl(var(--charcoal-light))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
