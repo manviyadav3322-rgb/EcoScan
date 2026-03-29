@@ -24,10 +24,21 @@ const DigitalVault = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {wardrobeItems.map((item, i) => (
-            <VaultCard key={item.id} item={item} index={i} />
-          ))}
+        {/* Scan overlay container */}
+        <div className="relative overflow-hidden rounded-2xl border border-border/30 bg-card p-6">
+          {/* Laser scan line */}
+          <motion.div
+            initial={{ top: "-10%" }}
+            animate={{ top: "110%" }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+            className="absolute left-0 w-full h-[2px] bg-sage opacity-70 blur-[1px] z-10 pointer-events-none"
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {wardrobeItems.map((item, i) => (
+              <VaultCard key={item.id} item={item} index={i} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

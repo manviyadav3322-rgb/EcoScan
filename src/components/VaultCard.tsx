@@ -16,7 +16,7 @@ const VaultCard = ({ item, index }: VaultCardProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="luxury-card group"
+      className={`luxury-card glitch-card group ${isHigh ? "high-impact-alert" : ""}`}
     >
       {/* Image area */}
       <div className={`h-40 rounded-xl bg-gradient-to-br ${item.imageGradient} flex items-center justify-center mb-5 overflow-hidden relative`}>
