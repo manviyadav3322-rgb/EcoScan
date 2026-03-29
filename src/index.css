@@ -132,4 +132,52 @@
     color: hsl(var(--charcoal));
     line-height: 1.2;
   }
+
+  /* Glitch hover effect */
+  .glitch-card {
+    position: relative;
+    transition: all 0.25s ease;
+  }
+
+  .glitch-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .glitch-card:hover::before,
+  .glitch-card:hover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .glitch-card:hover::before {
+    background: hsl(var(--sage));
+    transform: translateX(-1px);
+  }
+
+  .glitch-card:hover::after {
+    background: hsl(var(--charcoal));
+    transform: translateX(1px);
+  }
+
+  /* High impact red alert */
+  .high-impact-alert {
+    border: 1.5px solid hsl(var(--destructive) / 0.5);
+    box-shadow: 0 0 12px -4px hsl(var(--destructive) / 0.2);
+    animation: alertPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes alertPulse {
+    0%, 100% {
+      border-color: hsl(var(--destructive) / 0.5);
+      box-shadow: 0 0 12px -4px hsl(var(--destructive) / 0.2);
+    }
+    50% {
+      border-color: hsl(var(--destructive) / 0.8);
+      box-shadow: 0 0 20px -4px hsl(var(--destructive) / 0.35);
+    }
+  }
 }
