@@ -1,9 +1,11 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Leaf, ArrowDown } from "lucide-react";
+import UploadDialog from "./UploadDialog";
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const [uploadOpen, setUploadOpen] = useState(false);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -15,7 +17,6 @@ const HeroSection = () => {
 
   return (
     <section ref={ref} className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-      {/* Subtle background texture */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-sage-light/30" />
 
       <motion.div
@@ -57,13 +58,10 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.55 }}
-          className="flex items-center justify-center gap-4"
+          className="flex items-center justify-center"
         >
-          <button className="luxury-btn">
+          <button className="luxury-btn" onClick={() => setUploadOpen(true)}>
             Scan Your Wardrobe
-          </button>
-          <button className="luxury-btn-outline">
-            Learn More
           </button>
         </motion.div>
 
@@ -76,6 +74,8 @@ const HeroSection = () => {
           <ArrowDown className="h-5 w-5 mx-auto text-muted-foreground animate-bounce" />
         </motion.div>
       </motion.div>
+
+      <UploadDialog open={uploadOpen} onClose={() => setUploadOpen(false)} />
     </section>
   );
 };

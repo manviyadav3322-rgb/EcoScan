@@ -1,14 +1,11 @@
 import { motion } from "framer-motion";
-import { wardrobeItems, materialComposition } from "@/data/wardrobe";
+import { useWardrobe } from "@/context/WardrobeContext";
+import { materialComposition } from "@/data/wardrobe";
 import { BarChart3, TrendingDown } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
 const CarbonDashboard = () => {
-  const totalCO2 = wardrobeItems.reduce((s, i) => s + i.co2Score, 0);
-  const avgScore = Math.round(
-    wardrobeItems.reduce((s, i) => s + i.sustainabilityScore, 0) / wardrobeItems.length
-  );
-  const co2Saved = 12.4; // simulated
+  const { dashboard } = useWardrobe();
 
   const monthlySavings = [
     { month: "Jan", saved: 1.2 },
@@ -39,11 +36,10 @@ const CarbonDashboard = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          {/* Stat cards */}
           {[
-            { label: "Total CO₂", value: `${totalCO2.toFixed(1)} kg`, sub: "Across all garments" },
-            { label: "CO₂ Saved", value: `${co2Saved} kg`, sub: "Through conscious choices", icon: TrendingDown },
-            { label: "Avg Score", value: `${avgScore}/100`, sub: "Wardrobe sustainability" },
+            { label: "Total CO₂", value: `${dashboard.totalCO2} kg`, sub: `Across ${dashboard.totalItems} garments` },
+            { label: "CO₂ Saved", value: `${dashboard.carbonSaved} kg`, sub: "Through conscious choices", icon: TrendingDown },
+            { label: "Eco Score", value: `${dashboard.ecoScore}/100`, sub: "Wardrobe sustainability" },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -61,7 +57,6 @@ const CarbonDashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Monthly savings bar chart */}
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -88,7 +83,6 @@ const CarbonDashboard = () => {
             </div>
           </motion.div>
 
-          {/* Material composition */}
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
